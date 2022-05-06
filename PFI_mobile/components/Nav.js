@@ -1,38 +1,31 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { View, StyleSheet, Button, Text } from 'react-native';
-import Screen from '../KnapSack_app/components/Screen';
+
+import Screen from './Screen';
+import Magasin from './Magasin';
+import About from './About';
+import FindUs from './FindUs';
+import Panier from './Panier';
 
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 export default function App() {
     return (
-        <Screen>
+        <Screen style={styles.container}>
             <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen name=" Home" component={Page0} />
-                    <Stack.Screen name=" Ecran2" component={Page2} />
-                </Stack.Navigator>
+                <Tab.Navigator initialRouteName="Home" >
+					<Tab.Screen name="Magasin" component={Magasin} />
+					<Tab.Screen name="Panier" component={Panier}/>
+                    <Tab.Screen name="About" component={About}/>
+                    <Tab.Screen name="Find us" component={FindUs}/>
+				</Tab.Navigator>
             </NavigationContainer>
         </Screen>
     );
 }
-
-const Page2 = ({ navigation }) => {
-    return (
-        <View>
-            <Text>Deuxième Écran</Text>
-            <Button title="Home" onPress={() => navigation.navigate('Home')} />
-        </View>
-    );
-}
-const Page0 = ({ navigation }) =>
-    <View>
-        <Text>Home</Text>
-        <Button title="Deuxième Écran" onPress={() => navigation.navigate("Ecran2")} />
-    </View>
-
 
 const styles = StyleSheet.create({
     container: {

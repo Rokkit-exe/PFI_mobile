@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-function Profil(props) {
+function Details(props) {
     return (
-        <View style={styles.container}></View>
+        <View style={styles.container}>Details</View>
     );
 }
 
@@ -12,4 +12,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Profil;
+export default Details;

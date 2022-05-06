@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-function Question(props) {
+function FindUs(props) {
     return (
-        <View style={styles.container}></View>
+        <View style={styles.container}>Find Us</View>
     );
 }
 
@@ -12,4 +12,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Question;
+export default FindUs;

@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import Screen from './components/Screen';
+import Accueil from './components/Accueil';
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Screen style={styles.container}>
+      <Accueil style={styles.subContainer}/>
+    </Screen>
   );
 }
 
@@ -17,4 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  subContainer: {
+
+  }
 });
