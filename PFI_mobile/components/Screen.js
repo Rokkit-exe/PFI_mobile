@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     view: {
-        flex: 1, 
+        flex: 1,
+        width: '100%' 
     }
 })
 
