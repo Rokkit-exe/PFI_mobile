@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
 function Panier(props) {
     return (
-        <View style={styles.container}>Panier</View>
+        <View style={styles.container}>
+            <Text>Panier</Text>
+        </View>
     );
 }
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
 function FindUs(props) {
     return (
-        <View style={styles.container}>Find Us</View>
+        <View style={styles.container}>
+            <Text>FindUs</Text>
+        </View>
     );
 }
 

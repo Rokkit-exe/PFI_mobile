@@ -1,12 +1,24 @@
-import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, Pressable } from 'react-native';
 
-function Connection(children, style) {
+function Connection({navigation, style}) {
+    let [username, setUsername] = useState("")
+    let [password, setPassword] = useState("")
+    const connection = () => {
+        if (username.length > 0 && password.length > 0) {
+            console.log("nav")
+            navigation.navigate('Nav')
+        }
+        else {
+            console.log("error")
+        }
+    }
     return (
         <View style={[styles.container, style]}>
-            <TextInput style={styles.textInput} placeholder="email/username" keyboardType="email-address"></TextInput>
-            <TextInput style={styles.textInput} placeholder="Mot de passe" keyboardType="default" secureTextEntry={true}></TextInput>
-            <Pressable style={styles.button} title='Connection'>
+            <TextInput style={styles.textInput} onChangeText={(val) => setUsername(val)} placeholder="email/username" keyboardType="email-address"></TextInput>
+            <TextInput style={styles.textInput} onChangeText={(val) => setPassword(val)} placeholder="Mot de passe" keyboardType="default" secureTextEntry={true}></TextInput>
+            <Pressable style={styles.button} title='Connection' onPress={() => connection()}>
                 <Text>Connection</Text>
             </Pressable>
         </View>
@@ -15,8 +27,7 @@ function Connection(children, style) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
+        width: '100%',
         alignItems: 'center',
     },
     textInput: {
@@ -24,7 +35,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 25,
         height: 60,
-        width: '90%',
+        width: '70%',
         marginHorizontal: 10,
         marginVertical: 10,
         paddingLeft: 15,

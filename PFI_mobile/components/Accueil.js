@@ -4,16 +4,18 @@ import { View, StyleSheet, Image, Button, Pressable, Text } from 'react-native';
 import Screen from './Screen';
 import Connection from './Connection';
 
-function Accueil(props) {
-    
+function Accueil({navigation}) {
+    const connForm = <Connection style={styles.connection} navigation={navigation}/>
+    const connButton = <Pressable style={styles.button} onPress={() => setConn(connForm)} >
+                            <Text style={styles.buttonText}>Connection</Text>
+                        </Pressable>
+    let [conn, setConn] = useState(connButton)
     return (
         <Screen style={styles.container}>
             <View style={styles.subContainer}>
                 <Image style={styles.image} source={require('../assets/shop_logo.png')}/>
             </View>
-            <Pressable style={styles.button}onPress={() => <Connection style={styles.connection}/>} >
-                    <Text style={styles.buttonText}>Connection</Text>
-            </Pressable>
+                {conn}
         </Screen>
     );
 }
