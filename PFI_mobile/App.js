@@ -7,15 +7,17 @@ import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-        <Stack.Navigator>
-					<Stack.Screen name="Accueil" component={Accueil}/>
-					<Stack.Screen name="Nav" component={Nav}/>
-				</Stack.Navigator>
-    </NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="BitExchange" component={Accueil} options={{headerShown:false}}/>
+        <Stack.Screen name="Nav" component={Nav} options={{headerShown:false}}/>
+      </Stack.Navigator>
+    </NavigationContainer> 
   );
 }
 

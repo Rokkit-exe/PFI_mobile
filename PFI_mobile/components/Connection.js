@@ -1,12 +1,33 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState, useNa } from 'react';
 import { View, StyleSheet, Text, TextInput, Pressable } from 'react-native';
+import AppPicker from './AppPicker';
+// remplacer cette liste par les user de la BD
+const users = [
+    {
+        id: 1,
+        name: 'Frank'
+    },
+    {
+        id: 2,
+        name: 'Bob'
+    },
+    {
+        id: 3,
+        name: 'Peter'
+    },
+    {
+        id: 4,
+        name: 'Paul'
+    },
+]
 
-function Connection({navigation, style}) {
-    let [username, setUsername] = useState("")
-    let [password, setPassword] = useState("")
+function Connection({style}) {
+    let [user, setUser] = useState(null)
+    const navigation = useNavigation()
     const connection = () => {
-        if (username.length > 0 && password.length > 0) {
+        if (user != "") {
             console.log("nav")
             navigation.navigate('Nav')
         }
@@ -14,10 +35,10 @@ function Connection({navigation, style}) {
             console.log("error")
         }
     }
+    //const options = users.map((user) => <Option value={user.id}>{user.name}</Option>)
     return (
         <View style={[styles.container, style]}>
-            <TextInput style={styles.textInput} onChangeText={(val) => setUsername(val)} placeholder="email/username" keyboardType="email-address"></TextInput>
-            <TextInput style={styles.textInput} onChangeText={(val) => setPassword(val)} placeholder="Mot de passe" keyboardType="default" secureTextEntry={true}></TextInput>
+            <AppPicker items={users} onSelectItem={(user) => setUser(user)} placeholder={user ? user.name : 'pick a user'}></AppPicker>
             <Pressable style={styles.button} title='Connection' onPress={() => connection()}>
                 <Text>Connection</Text>
             </Pressable>

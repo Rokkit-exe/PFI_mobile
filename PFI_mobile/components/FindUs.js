@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-
+import Screen from './Screen';
 function FindUs(props) {
     return (
-        <View style={styles.container}>
-            <Text>FindUs</Text>
-        </View>
+        <Screen style={styles.container}>
+            <Text>Find Us</Text>
+        </Screen>
     );
 }
 

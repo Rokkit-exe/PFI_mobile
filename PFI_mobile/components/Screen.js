@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     },
     view: {
         flex: 1,
-        width: '100%' 
+        width: '100%',
+        backgroundColor: '#044A64'
     }
 })
 

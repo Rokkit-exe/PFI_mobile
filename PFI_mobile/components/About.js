@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import Screen from './Screen';
 
 function About(props) {
     return (
-        <View style={styles.container}>
+        <Screen style={styles.container}>
             <Text>About</Text>
-        </View>
+        </Screen>
     );
 }
 
