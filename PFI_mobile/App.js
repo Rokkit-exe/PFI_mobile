@@ -14,7 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="BitExchange" component={Accueil} options={{headerShown:false}}/>
+        <Stack.Screen name="Accueil" component={Accueil} options={{headerShown:false}}/>
         <Stack.Screen name="Nav" component={Nav} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer> 

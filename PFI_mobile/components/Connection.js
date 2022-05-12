@@ -35,7 +35,6 @@ function Connection({style}) {
             console.log("error")
         }
     }
-    //const options = users.map((user) => <Option value={user.id}>{user.name}</Option>)
     return (
         <View style={[styles.container, style]}>
             <AppPicker items={users} onSelectItem={(user) => setUser(user)} placeholder={user ? user.name : 'pick a user'}></AppPicker>
