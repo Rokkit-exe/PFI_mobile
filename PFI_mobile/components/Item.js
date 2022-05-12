@@ -5,15 +5,10 @@ import Details from './Details';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 
-function Item({item, icon}) {
-    let [details, setDetails] = useState()
+function Item({item, icon, onPress}) {
+    let [details, setDetails] = useState(null)
     const newdetails = () => <Details item={item}/>
-    const toggle = () => {
-        if (details != null)
-            setDetails(null)
-        else
-            setDetails(newdetails)
-    }
+    const toggle = () => details != null ? setDetails(null) : setDetails(newdetails)
     return (
         <Pressable style={styles.itemContainer} onPress={() => toggle()}>
             <View>
@@ -25,7 +20,7 @@ function Item({item, icon}) {
             </View>
             <View style={styles.buttonContainer}>
                 {/* // ********* remplcer le console.log() par la fonction qui ajoute un item dans la BD Panier ********** */}
-                <Pressable style={styles.button} onPress={() => console.log(`${item.name} ajouter au panier`)}>
+                <Pressable style={styles.button} onPress={onPress}>
                     <MaterialCommunityIcons name={icon} style={styles.icons} color="lightblue"/>
                 </Pressable>
             </View>
