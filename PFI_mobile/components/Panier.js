@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, FlatList, Pressable } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Pressable, Image } from 'react-native';
 import Screen from './Screen';
 import Item from './Item';
 
@@ -56,7 +56,7 @@ const data = [
     },
 ]
 
-const renderItem = ({item}) => <Item item={item}/>
+const renderItem = ({item}) => <Item item={item} icon='trash-can'/>
 
 function Panier(props) {
     return (
@@ -68,14 +68,16 @@ function Panier(props) {
                 style={styles.flatlist}
             />
             <View style={styles.subContainer}>
-                <Text>
-
-                </Text>
-                <Pressable>
-                    <Text>
-                        Passer la commande
-                    </Text>
-                </Pressable>
+                <View style={styles.subsubContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.total}>
+                            Total: 1000$
+                        </Text>
+                    </View>
+                    <Pressable style={styles.buy}>
+                        <Image style={styles.icon} source={require('../assets/buy.png')}/>
+                    </Pressable>
+                </View>
             </View>
         </Screen>
     );
@@ -88,12 +90,39 @@ const styles = StyleSheet.create({
     subContainer: {
         position: 'absolute',
         bottom: 20,
-        height: 50,
+        height: 80,
         width: '90%',
-        borderRadius: 30,
-        borderWidth: 1,
+        borderRadius: 40,
+        borderWidth: 2,
         borderColor: 'black',
         backgroundColor: 'lightgrey',
+    },
+    subsubContainer: {
+        marginTop: 3,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'flex-end'
+    },
+    icon: {
+        height: 40,
+        width: 40,
+        color: 'green'
+    },
+    total: {
+        marginRight: 130,
+        fontSize: 25
+    },
+    buy: {
+        height: 70,
+        width: 70,
+        backgroundColor: 'green',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textContainer: {
+        justifyContent: 'center',
         alignItems: 'center'
     }
 })

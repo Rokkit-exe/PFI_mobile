@@ -35,7 +35,7 @@ const data = [
     },
 ]
 
-const renderItem = ({item}) => <Item item={item}/>
+const renderItem = ({item}) => <Item item={item} icon='plus'/>
 
 
 function Magasin(props) {
