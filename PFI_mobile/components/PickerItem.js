@@ -5,7 +5,7 @@ function PickerItem({item, onPress}) {
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
-                <Text style={styles.text}>{item.name}</Text>
+                <Text style={styles.text}>{item.usager}</Text>
             </View>
         </TouchableOpacity>
     );

@@ -12,12 +12,14 @@ import Panier from './Panier';
 
 
 const Tab = createBottomTabNavigator();
-export default function Nav() {
+
+export default function Nav({navigation, route}) {
+    const {user} = route.params
     return (
         <Tab.Navigator initialRouteName="Home" >
             <Tab.Screen 
-                name="Magasin" 
-                component={Magasin} 
+                name={user.usager} 
+                component={Magasin}
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="store" style={styles.icons} color={focused ? "blue" : "lightblue"} />,
                     headerShown: false

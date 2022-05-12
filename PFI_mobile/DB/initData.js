@@ -33,27 +33,27 @@ export default function initData() {
     "insert into Produits (nom, prix, image) values ('Cardano', '0.63', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fcoinmarketcap.com%2Fcurrencies%2Fcardano%2F&psig=AOvVaw1G1KazYQOW_CLNSD21w2vo&ust=1652466022765000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPD1g-XJ2vcCFQAAAAAdAAAAABAD')"
   );
 
-  db.execute("drop table if exists Connexions;");
+  db.execute("drop table if exists Connexion;");
   db.execute(
-    "CREATE TABLE IF NOT EXISTS Connexiont (usager TEXT, motdepasse TEXT, admin TEXT);"
+    "CREATE TABLE IF NOT EXISTS Connexion (usager TEXT, motdepasse TEXT, admin TEXT);"
   );
   db.execute(
-    "insert into Produits (usager, motdepasse, admin) values ('Frank','123456', '1')"
+    "insert into Connexion (usager, motdepasse, admin) values ('Frank','123456', '1')"
   );
   db.execute(
-    "insert into Produits (usager, motdepasse, admin) values ('Kesava','123456', '1')"
+    "insert into Connexion (usager, motdepasse, admin) values ('Kesava','123456', '1')"
   );
   db.execute(
-    "insert into Produits (usager, motdepasse, admin) values ('Mum','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin) values ('Mum','123456', '0')"
   );
   db.execute(
-    "insert into Produits (usager, motdepasse, admin) values ('Bob','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin) values ('Bob','123456', '0')"
   );
   db.execute(
-    "insert into Produits (usager, motdepasse, admin) values ('Karen','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin) values ('Karen','123456', '0')"
   );
   db.execute(
-    "insert into Produits (usager, motdepasse, admin) values ('XGrosQcX420','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin) values ('XGrosQcX420','123456', '0')"
   );
 
 }

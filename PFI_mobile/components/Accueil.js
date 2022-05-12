@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Button, Pressable, Text } from 'react-native';
 
 import Screen from './Screen';
 import Connection from './Connection';
+import initData from '../DB/initData';
 
 function Accueil({navigation}) {
     const connForm = <Connection style={styles.connection} navigation={navigation}/>
@@ -12,7 +13,7 @@ function Accueil({navigation}) {
     let [conn, setConn] = useState(connButton)
     return (
         <Screen style={styles.container}>
-            <View style={styles.subContainer}>
+            <View style={styles.subContainer} onLayout={() => initData()}>
                 <Image style={styles.image} source={require('../assets/shop_logo.png')}/>
             </View>
                 {conn}

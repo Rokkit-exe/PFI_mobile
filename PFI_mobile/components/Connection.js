@@ -3,41 +3,33 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState, useNa } from 'react';
 import { View, StyleSheet, Text, TextInput, Pressable } from 'react-native';
 import AppPicker from './AppPicker';
-// remplacer cette liste par les user de la BD
-const users = [
-    {
-        id: 1,
-        name: 'Frank'
-    },
-    {
-        id: 2,
-        name: 'Bob'
-    },
-    {
-        id: 3,
-        name: 'Peter'
-    },
-    {
-        id: 4,
-        name: 'Paul'
-    },
-]
+import {Database} from '../DB/database'
+
 
 function Connection({style}) {
-    let [user, setUser] = useState(null)
+    let [users, setUsers] = useState(null)
+    let [selectedUser, setSelectedUser] = useState(null)
+    const db = new Database('Magasin');
+    const loadUsers = () => {
+        db.execute("select usager, motdepasse, admin from Connexion")
+        .then((res) => {
+            console.log('it works')
+            setUsers(res.rows)
+        })
+    }
     const navigation = useNavigation()
     const connection = () => {
-        if (user != "") {
-            console.log("nav")
-            navigation.navigate('Nav')
+        if (selectedUser != "") {
+            navigation.navigate('Nav', {user: selectedUser})
         }
         else {
             console.log("error")
         }
     }
+    console.log(users)
     return (
-        <View style={[styles.container, style]}>
-            <AppPicker items={users} onSelectItem={(user) => setUser(user)} placeholder={user ? user.name : 'pick a user'}></AppPicker>
+        <View style={[styles.container, style]} onLayout={() => loadUsers()}>
+            <AppPicker items={users} onSelectItem={(selectedUser) => setSelectedUser(selectedUser)} placeholder={selectedUser ? selectedUser.usager : 'pick a user'}></AppPicker>
             <Pressable style={styles.button} title='Connection' onPress={() => connection()}>
                 <Text>Connection</Text>
             </Pressable>
