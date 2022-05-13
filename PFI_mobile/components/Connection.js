@@ -1,38 +1,38 @@
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState, useNa } from 'react';
-import { View, StyleSheet, Text, TextInput, Pressable } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import AppPicker from './AppPicker';
-import {Database} from '../DB/database'
+import {Database} from '../DB/database';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+
 
 
 function Connection({style}) {
     let [users, setUsers] = useState(null)
     let [selectedUser, setSelectedUser] = useState(null)
-    const db = new Database('Magasin');
-    const loadUsers = () => {
-        db.execute("select usager, motdepasse, admin from Connexion")
-        .then((res) => {
-            console.log('it works')
-            setUsers(res.rows)
-        })
-    }
     const navigation = useNavigation()
-    const connection = () => {
-        if (selectedUser != "") {
-            navigation.navigate('Nav', {user: selectedUser})
-        }
-        else {
-            console.log("error")
-        }
-    }
-    console.log(users)
+
+    const db = new Database('Magasin');
+    const loadUsers = () => db.execute("select usager, motdepasse, admin from Connexion").then((res) => setUsers(res.rows))
+    const connection = () => selectedUser != null ? navigation.navigate('Nav', {user: selectedUser}) : alert('you need to pick a user')
+
     return (
         <View style={[styles.container, style]} onLayout={() => loadUsers()}>
-            <AppPicker items={users} onSelectItem={(selectedUser) => setSelectedUser(selectedUser)} placeholder={selectedUser ? selectedUser.usager : 'pick a user'}></AppPicker>
-            <Pressable style={styles.button} title='Connection' onPress={() => connection()}>
-                <Text>Connection</Text>
-            </Pressable>
+            <AppPicker 
+                items={users} 
+                onSelectItem={(selectedUser) => setSelectedUser(selectedUser)} 
+                placeholder={selectedUser ? selectedUser.usager : 'pick a user'}
+            />
+            <TouchableOpacity style={styles.button} title='Connection' onPress={() => connection()}>
+                <MaterialCommunityIcons 
+                        name={'connection'}
+                        size={20} 
+                        color='#fff'
+                        style={styles.icon}
+                    />
+                <Text style={styles.buttonText}>Connection</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -54,18 +54,21 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     button: {
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'lightblue',
-        borderRadius: 25,
-        borderWidth: 2,
-        borderColor: 'grey',
+        backgroundColor: '#7952b3',
+        borderRadius: 30,
         height: 60,
-        width: '70%',
-        margin: 20
+        width: '60%',
+        marginTop: 20,
+        flexDirection: 'row'
     },
     buttonText: {
-        
+        color: '#fff',
+        fontSize: 25,
+        fontWeight: '400'
+    },
+    icon: {
+        marginHorizontal: 20
     }
 })
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, FlatList, Pressable, Image, Alert } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Pressable, Image, Alert, TouchableOpacity } from 'react-native';
 import Screen from './Screen';
 import Item from './Item';
 
@@ -104,9 +104,9 @@ function Panier(props) {
                             Total: {totals}$
                         </Text>
                     </View>
-                    <Pressable style={styles.buy} onPress={() => buy()}>
+                    <TouchableOpacity style={styles.buy} onPress={() => buy()}>
                         <Image style={styles.icon} source={require('../assets/buy.png')}/>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </View>
         </Screen>
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
         width: '90%',
         borderRadius: 40,
         borderWidth: 2,
-        borderColor: 'black',
-        backgroundColor: 'lightgrey',
+        borderColor: '#7952B3',
+        backgroundColor: '#1D1B1B',
     },
     subsubContainer: {
         justifyContent: 'center',
@@ -134,20 +134,22 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     icon: {
-        height: 40,
-        width: 40,
+        height: 30,
+        width: 30,
         color: 'green'
     },
     total: {
-        fontSize: 25
+        fontSize: 25,
+        color: 'lightgrey'
     },
     buy: {
-        height: 75,
-        width: 75,
+        height: 50,
+        width: 50,
         backgroundColor: 'green',
         borderRadius: 50,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 12
     },
     textContainer: {
         height: 75,

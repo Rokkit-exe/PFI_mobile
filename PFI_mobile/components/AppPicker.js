@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Modal, Button, FlatList, Text } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Modal, Button, FlatList, Text, TouchableOpacity } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Screen from './Screen';
 import PickerItem from './PickerItem';
@@ -13,36 +13,38 @@ function AppPicker({
     numberOfColumns = 1,
     onSelectItem, 
     selectedItem, 
-    PickerItemComponent = PickerItem, 
-    width = "80%" 
+    PickerItemComponent = PickerItem 
 }) {
     const [modalVisible, setModalVisible] = useState(false);
     
     return (
         <>
-            <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-                <View style={[styles.container, {width}]}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <View style={[styles.container]}>
                     { icon && (
                         <MaterialCommunityIcons 
                             name={icon}
                             size={20} 
-                            color='black'
+                            color='#fff'
                             style={styles.icon}
                         />
                     )}
                     {selectedItem ? (
                         <Text style={styles.text}>{selectedItem.label}</Text>
                     ) : (
-                        <Text style={styles.placeholder}>{placeholder}</Text>
+                        <Text style={styles.text}>{placeholder}</Text>
                     )} 
                     
-                    <MaterialCommunityIcons name="chevron-down" size={20} color={'black'} />
+                    <MaterialCommunityIcons name="chevron-down" size={20} color={'#fff'} />
                 </View>
-            </TouchableWithoutFeedback>
-            <Modal visible={modalVisible} animationType='slide'>
-                <Screen>
-                    <Button title='close' style={styles.button} onPress={() => setModalVisible(false)}/>
+            </TouchableOpacity>
+            <Modal visible={modalVisible} animationType='slide' >
+                <View style={styles.modal}>
+                    <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
+                        <Text style={styles.buttonText}>Close</Text>
+                    </TouchableOpacity>
                     <FlatList
+                        style={styles.flatList}
                         data={items}
                         keyExtractor={item => item.usager}
                         numColumns={numberOfColumns}
@@ -54,35 +56,47 @@ function AppPicker({
                                     setModalVisible(false);
                                     onSelectItem(item);
                                 }}
+                                icon='account'
                             />
                         }
                     />
-                </Screen>
+                </View>
             </Modal>
         </>
     );
 }
 
 const styles = StyleSheet.create({
+    modal: {
+        flex: 1,
+        backgroundColor: '#222222'
+    },
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#7952B3',
         borderRadius: 25,
         flexDirection: 'row',
         padding: 15,
         marginVertical: 10,
-    },
-    icon: {
-        marginRight: 10
-    },
-    text: {
-        flex: 1
-    },
-    placeholder: {
-        color: 'black',
-        flex: 1
+        width: "80%"
     },
     button: {
-        backgroundColor: 'lightgrey'
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#2F3337',
+        height: 35,
+        borderColor: 'black',
+        borderWidth: 1
+    },
+    icon: {
+        marginRight: 10,
+    },
+    text: {
+        flex: 1,
+        color: '#fff'
+    },
+    buttonText: {
+        color: 'lightgrey',
+        fontSize: 20,
     }
 })
 

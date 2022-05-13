@@ -16,19 +16,28 @@ const Tab = createBottomTabNavigator();
 export default function Nav({navigation, route}) {
     const {user} = route.params
     return (
-        <Tab.Navigator initialRouteName="Home" >
+        <Tab.Navigator 
+            initialRouteName="Home"
+            screenOptions={{
+                tabBarStyle: {
+                    backgroundColor: '#222222',
+                },
+                tabBarActiveTintColor: '#7952B3',
+                tabBarInactiveTintColor: 'lightgrey'
+            }}
+        >
             <Tab.Screen 
                 name={user.usager} 
                 component={Magasin}
                 options={{ 
-                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="store" style={styles.icons} color={focused ? "blue" : "lightblue"} />,
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="store" style={styles.icons} color={focused ? "#7952B3" : "lightgrey"} />,
                     headerShown: false
                     }} />
             <Tab.Screen 
                 name="Panier" 
                 component={Panier} 
                 options={{ 
-                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="cart" color={focused ? "blue" : "lightblue"} style={styles.icons}/>,
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="cart" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
                     headerShown: false
                 }}
             />
@@ -36,7 +45,7 @@ export default function Nav({navigation, route}) {
                 name="About" 
                 component={About} 
                 options={{ 
-                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="information" color={focused ? "blue" : "lightblue"} style={styles.icons}/>,
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="information" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
                     headerShown: false
                 }}
             />
@@ -44,7 +53,7 @@ export default function Nav({navigation, route}) {
                 name="Find us" 
                 component={FindUs} 
                 options={{ 
-                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="map-marker-star" color={focused ? "blue" : "lightblue"} style={styles.icons}/>,
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="map-marker-star" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
                     headerShown: false
                 }}
             />

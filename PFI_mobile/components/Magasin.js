@@ -1,50 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, FlatList, Image, Button, Pressable } from 'react-native';
 import Screen from './Screen';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Details from './Details';
 import Item from './Item';
+import {Database} from "../DB/database";
 
-
-
-const Stack = createNativeStackNavigator();
-
-// Remplacer cette liste par les valeurs de la BD
-const data = [
-    {
-        id: 1,
-        name: "bitcoin",
-        price: 35000,
-        image: 'https://www.freepnglogos.com/uploads/bitcoin-png/bitcoin-how-send-bitcoins-from-paper-wallet-bitcoins-4.png',
-        info: 'blablbalbalablaba;ba'
-    },
-    {
-        id: 2,
-        name: "bitcoin",
-        price: 35000,
-        image: 'https://www.freepnglogos.com/uploads/bitcoin-png/bitcoin-how-send-bitcoins-from-paper-wallet-bitcoins-4.png',
-        info: 'blablbalbalablaba;ba'
-    },
-    {
-        id: 3,
-        name: "bitcoin",
-        price: 35000,
-        image: 'https://www.freepnglogos.com/uploads/bitcoin-png/bitcoin-how-send-bitcoins-from-paper-wallet-bitcoins-4.png',
-        info: 'blablbalbalablaba;ba'
-    },
-]
+const db = new Database("Magasin");
 
 const renderItem = ({item}) => <Item item={item} icon='plus'/>
 
-
 function Magasin(props) {
+    let [items, setItems] = useState(null)
+
+    const loadItems = () => {
+        db.execute("select nom, prix, image from Produits")
+        .then((res) => {
+            console.log(res.rows)
+            setItems(res.rows)
+        })
+    }
     return (
-        <Screen style={styles.container}>
+        <Screen style={styles.container} onLayout={() => loadItems()}>
             <FlatList
-                data={data}
+                data={items}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.nom}
                 style={styles.flatlist}
             />
         </Screen>
@@ -59,6 +41,7 @@ const styles = StyleSheet.create({
     flatlist: {
         flex: 1,
         width: '100%',
+        marginBottom: 20,
     },
     
 })

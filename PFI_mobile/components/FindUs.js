@@ -15,7 +15,7 @@ const findLocation = () => {
             let location = await Location.getCurrentPositionAsync({});
             return location
             })();
-    }, []);
+        }, []);
 }
 
 
