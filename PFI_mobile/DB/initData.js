@@ -35,27 +35,32 @@ export default function initData() {
 
   db.execute("drop table if exists Connexion;");
   db.execute(
-    "CREATE TABLE IF NOT EXISTS Connexion (usager TEXT, motdepasse TEXT, admin TEXT);"
+    "CREATE TABLE IF NOT EXISTS Connexion (id INTEGER primary key autoincrement, usager TEXT, motdepasse TEXT, admin TEXT, connected TEXT);"
   );
   db.execute(
-    "insert into Connexion (usager, motdepasse, admin) values ('Frank','123456', '1')"
+    "insert into Connexion (usager, motdepasse, admin, connected) values ('Frank','123456', '1', '0')"
   );
   db.execute(
-    "insert into Connexion (usager, motdepasse, admin) values ('Kesava','123456', '1')"
+    "insert into Connexion (usager, motdepasse, admin, connected) values ('Kesava','123456', '1', '0')"
   );
   db.execute(
-    "insert into Connexion (usager, motdepasse, admin) values ('Mum','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin, connected) values ('Mum','123456', '0', '0')"
   );
   db.execute(
-    "insert into Connexion (usager, motdepasse, admin) values ('Bob','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin, connected) values ('Bob','123456', '0', '0')"
   );
   db.execute(
-    "insert into Connexion (usager, motdepasse, admin) values ('Karen','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin, connected) values ('Karen','123456', '0', '0')"
   );
   db.execute(
-    "insert into Connexion (usager, motdepasse, admin) values ('XGrosQcX420','123456', '0')"
+    "insert into Connexion (usager, motdepasse, admin, connected) values ('XGrosQcX420','123456', '0', '0')"
   );
 
+
+  db.execute("drop table if exists Panier;");
+  db.execute(
+    "CREATE TABLE IF NOT EXISTS Panier (id INTEGER primary key autoincrement, idUsager INTEGER, idProduit INTEGER);"
+  );
 }
 
 

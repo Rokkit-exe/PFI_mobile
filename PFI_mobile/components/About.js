@@ -41,8 +41,7 @@ function About(props) {
 
 const styles = StyleSheet.create({
     container: {
-        //justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     headerContainer: {
         alignItems:'center',

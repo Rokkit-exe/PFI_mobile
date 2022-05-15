@@ -14,6 +14,10 @@ function Connection({style}) {
     const navigation = useNavigation()
 
     const db = new Database('Magasin');
+
+    const connectUser = () => {
+        selectedUser != null && db.execute(`update Connexion set connected = '1' where usager = '${selectedUser.usager}'`)
+    }
     const loadUsers = () => db.execute("select usager, motdepasse, admin from Connexion").then((res) => setUsers(res.rows))
     const connection = () => selectedUser != null ? navigation.navigate('Nav', {user: selectedUser}) : alert('you need to pick a user')
 
@@ -24,7 +28,14 @@ function Connection({style}) {
                 onSelectItem={(selectedUser) => setSelectedUser(selectedUser)} 
                 placeholder={selectedUser ? selectedUser.usager : 'pick a user'}
             />
-            <TouchableOpacity style={styles.button} title='Connection' onPress={() => connection()}>
+            <TouchableOpacity 
+                style={styles.button} 
+                title='Connection' 
+                onPress={() => {
+                    connectUser()
+                    connection()
+                }}
+            >
                 <MaterialCommunityIcons 
                         name={'connection'}
                         size={20} 

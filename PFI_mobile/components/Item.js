@@ -19,7 +19,6 @@ function Item({item, icon, onPress}) {
                 <Image style={styles.image} source={{uri: item.image}}/>
             </View>
             <View style={styles.buttonContainer}>
-                {/* // ********* remplcer le console.log() par la fonction qui ajoute un item dans la BD Panier ********** */}
                 <TouchableOpacity style={styles.button} onPress={onPress}>
                     <MaterialCommunityIcons name={icon} style={styles.icons} color="lightblue"/>
                 </TouchableOpacity>

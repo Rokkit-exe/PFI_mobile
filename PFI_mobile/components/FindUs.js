@@ -48,7 +48,6 @@ function FindUs(props) {
 
     return (
         <Screen style={styles.container}>
-            {/* <Text>{text}</Text> */}
             <Pressable style={styles.button} onPress={() => setLocation(findLocation())}>
                 <Text style={styles.buttonText}>
                     Find My Location

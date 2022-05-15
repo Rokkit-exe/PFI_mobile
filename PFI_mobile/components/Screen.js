@@ -7,6 +7,7 @@ function Screen({children, style, onLayout}) {
     return (
         <View style={styles.container}>
             <SafeAreaView style={[styles.screen, style]}>
+                <StatusBar barStyle='light-content' backgroundColor='#1D1B1B'/>
                 <View style={[styles.view, style]} onLayout={onLayout}>{children}</View>
             </SafeAreaView>
         </View>
