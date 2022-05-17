@@ -18,14 +18,17 @@ function Panier(props) {
     
 
     let [totals, setTotal] = useState(0);
-    let [userId, setUserId] = useState(-1)
-    let [panier, setPanier] = useState([])
+    let [userId, setUserId] = useState(null)
+    let [user, setUser] = useState(null)
+    let [panier, setPanier] = useState(null)
 
     const getConnectedUser = () => {
         db.execute("select id from Connexion where connected = '1'")
         .then((res) => {
-            setUserId(res.rows[0].id)
-            return res.rows[0].id
+            console.log(res.rows[0].id)
+            let user = res.rows[0]
+            setUser(user)
+            setUserId(user.id)
         })
     }
 
@@ -36,23 +39,13 @@ function Panier(props) {
         setTotal(getTotal(items))
     }
 
-    const getPanierUsager = (user) => {
-        console.log(user)
-        db.execute(`select Panier.id, idUsager, idProduit, nom, prix, image from Panier join Produits on Panier.idProduit = Produit.id where Panier.idUsager = ${user}`)
+    const getPanier = () => {
+        db.execute(`select * from Panier`)
         .then((res) => {
-            console.log(`rows : ${res.rows}`)
             setPanier(res.rows)
+            setTotal(getTotal(res.rows))
         })
     }
-
-    const removeAllItemsPanier = () => {
-        db.execute(`delete from Panier where idUsager = ${userId}`)
-    }
-
-    const removeItemPanier = (itemId) => {
-        db.execute(`delete from Panier where idUsager = ${userId} and idProduit = ${itemId}`)
-    }
-
 
     const buy = () => {
         Alert.alert(
@@ -63,16 +56,17 @@ function Panier(props) {
                     text: "Non",
                     style: "cancel"
                 },
-                { text: "Oui", onPress: () => {removeAllItemsPanier();setTotal(0)} }
+                { text: "Oui", onPress: () => setTotal(0) }
             ]
         );
     }
     
-    const renderItem = ({item}) => <Item item={item} icon='trash-can' onPress={() => {removeItem(panier, item.id); removeItemPanier(item.id)}}/>
+    const renderItem = ({item}) => <Item item={item} icon='trash-can' onPress={() => {removeItem(panier, item.id)}}/>
 
     return (
         <Screen style={styles.container} onLayout={() => {
-            getPanierUsager(getConnectedUser())            
+            getConnectedUser()
+            getPanier()            
         }}>
             <FlatList
                 data={panier}

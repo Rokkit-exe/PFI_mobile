@@ -59,7 +59,7 @@ export default function initData() {
 
   db.execute("drop table if exists Panier;");
   db.execute(
-    "CREATE TABLE IF NOT EXISTS Panier (id INTEGER primary key autoincrement, idUsager INTEGER, idProduit INTEGER);"
+    "CREATE TABLE IF NOT EXISTS Panier (id INTEGER primary key autoincrement, idUsager INTEGER, idProduit INTEGER, nom TEXT, prix REAL, image TEXT);"
   );
 }
 

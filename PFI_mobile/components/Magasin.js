@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Details from './Details';
 import Item from './Item';
 import {Database} from "../DB/database";
+import AddItem from './AddItem';
 
 const db = new Database("Magasin");
 
@@ -13,18 +14,20 @@ const db = new Database("Magasin");
 
 function Magasin(props) {
     let [items, setItems] = useState(null)
-    let [userId, setUserId] = useState(null)
+    let [user, setUser] = useState([])
 
     const getConnectedUser = () => {
-        db.execute("select id from Connexion where connected = '1'")
+        db.execute("select usager, motdepasse, admin, connected from Connexion where connected = '1'")
         .then((res) => {
-            setUserId(res.rows[0].id)
+            console.log(res.rows[0])
+            setUser(res.rows[0])
+            
         })
     }
     
     const addItemPanier = (item) => {
         db.execute(
-            `insert into Panier (idUsager, idProduit) values (${userId}, ${item.id})`
+            `insert into Panier (idUsager, idProduit, nom, prix, image) values (${user.id}, ${item.id}, '${item.nom}', '${item.prix}', '${item.image}')`
         );
     }
     
@@ -46,12 +49,13 @@ function Magasin(props) {
                 getConnectedUser()
             }}
         >
+            {user.admin == '1' ? <AddItem/> :
             <FlatList
                 data={items}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 style={styles.flatlist}
-            />
+            />}
         </Screen>
     );
 }

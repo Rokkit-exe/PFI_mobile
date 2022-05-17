@@ -42,6 +42,7 @@ export default function Nav({navigation, route}) {
                 }}
             />
             <Tab.Screen 
+            
                 name="About" 
                 component={About} 
                 options={{ 
