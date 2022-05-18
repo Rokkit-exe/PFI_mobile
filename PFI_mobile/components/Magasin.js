@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, FlatList, Image, Button, Pressable } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Image, Button, Pressable, Alert } from 'react-native';
 import Screen from './Screen';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Details from './Details';
 import Item from './Item';
@@ -12,9 +13,10 @@ const db = new Database("Magasin");
 
 
 
-function Magasin(props) {
+function Magasin({navigation, route}) {
+    const {selectedUser} = route.params
     let [items, setItems] = useState(null)
-    let [user, setUser] = useState([])
+    let [user, setUser] = useState(selectedUser)
 
     const getConnectedUser = () => {
         db.execute("select usager, motdepasse, admin, connected from Connexion where connected = '1'")
@@ -42,11 +44,11 @@ function Magasin(props) {
         })
     }
     return (
-        <Screen 
+        <View 
             style={styles.container} 
             onLayout={() => {
                 loadItems()
-                getConnectedUser()
+                //getConnectedUser()
             }}
         >
             {user.admin == '1' ? <AddItem/> :
@@ -56,14 +58,16 @@ function Magasin(props) {
                 keyExtractor={item => item.id}
                 style={styles.flatlist}
             />}
-        </Screen>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#222222'
     },
     flatlist: {
         flex: 1,

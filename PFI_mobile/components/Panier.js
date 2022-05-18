@@ -3,23 +3,24 @@ import { View, StyleSheet, Text, FlatList, Pressable, Image, Alert, TouchableOpa
 import Screen from './Screen';
 import Item from './Item';
 import { Database } from '../DB/database';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const db = new Database("Magasin");
 
 // Remplacer cette liste par les valeurs de la BD
 
 
-function Panier(props) {
+function Panier({navigation, route}) {
     const getTotal = (items) => {
         let total = 0
         items && items.forEach((x) => total += x.prix)
         return total
     }
     
-
+    const {selectedUser} = route.params
     let [totals, setTotal] = useState(0);
-    let [userId, setUserId] = useState(null)
-    let [user, setUser] = useState(null)
+    let [user, setUser] = useState(selectedUser)
     let [panier, setPanier] = useState(null)
 
     const getConnectedUser = () => {
@@ -32,15 +33,28 @@ function Panier(props) {
         })
     }
 
+    const removeItemPanier = (id) => {
+        db.execute(`delete from Panier where idProduit = ${id} and idUsager = ${user.id}`)
+    }
+
     const removeItem = (items, id) => {
         let newItems = []
         items.forEach((item) => item.id != id && newItems.push(item))
         setPanier(newItems)
-        setTotal(getTotal(items))
+        setTotal(getTotal(newItems))
+        removeItemPanier(id)
+    }
+
+    const removeAllItemPanier = () => {
+        db.execute(`delete from Panier where idUsager = ${user.id}`)
+        .then((res) => {
+            setPanier(null)
+            setTotal(0)
+        })
     }
 
     const getPanier = () => {
-        db.execute(`select * from Panier`)
+        db.execute(`select * from Panier where idUsager = ${user.id}`)
         .then((res) => {
             setPanier(res.rows)
             setTotal(getTotal(res.rows))
@@ -56,7 +70,7 @@ function Panier(props) {
                     text: "Non",
                     style: "cancel"
                 },
-                { text: "Oui", onPress: () => setTotal(0) }
+                { text: "Oui", onPress: () => removeAllItemPanier() }
             ]
         );
     }
@@ -64,8 +78,8 @@ function Panier(props) {
     const renderItem = ({item}) => <Item item={item} icon='trash-can' onPress={() => {removeItem(panier, item.id)}}/>
 
     return (
-        <Screen style={styles.container} onLayout={() => {
-            getConnectedUser()
+        <View style={styles.container} onLayout={() => {
+            //getConnectedUser()
             getPanier()            
         }}>
             <FlatList
@@ -86,13 +100,16 @@ function Panier(props) {
                     </TouchableOpacity>
                 </View>
             </View>
-        </Screen>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#1D1B1B'
     },
     subContainer: {
         position: 'absolute',

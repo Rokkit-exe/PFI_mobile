@@ -23,31 +23,32 @@ export default function Nav({navigation, route}) {
                     backgroundColor: '#222222',
                 },
                 tabBarActiveTintColor: '#7952B3',
-                tabBarInactiveTintColor: 'lightgrey'
+                tabBarInactiveTintColor: 'lightgrey',
             }}
         >
             <Tab.Screen 
+                initialParams={{selectedUser: user}}
                 name={user.usager} 
                 component={Magasin}
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="store" style={styles.icons} color={focused ? "#7952B3" : "lightgrey"} />,
-                    headerShown: false
+                    headerShown: false,
                     }} />
-            <Tab.Screen 
+            <Tab.Screen
+                initialParams={{selectedUser: user}}
                 name="Panier" 
                 component={Panier} 
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="cart" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
-                    headerShown: false
+                    headerShown: false,
                 }}
             />
             <Tab.Screen 
-            
                 name="About" 
                 component={About} 
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="information" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
-                    headerShown: false
+                    headerShown: false,
                 }}
             />
             <Tab.Screen 
@@ -55,7 +56,7 @@ export default function Nav({navigation, route}) {
                 component={FindUs} 
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="map-marker-star" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
-                    headerShown: false
+                    headerShown: false,
                 }}
             />
         </Tab.Navigator>

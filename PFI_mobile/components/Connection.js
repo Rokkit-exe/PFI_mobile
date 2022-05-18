@@ -18,7 +18,7 @@ function Connection({style}) {
     const connectUser = () => {
         selectedUser != null && db.execute(`update Connexion set connected = '1' where usager = '${selectedUser.usager}'`)
     }
-    const loadUsers = () => db.execute("select usager, motdepasse, admin from Connexion").then((res) => setUsers(res.rows))
+    const loadUsers = () => db.execute("select id, usager, motdepasse, admin from Connexion").then((res) => setUsers(res.rows))
     const connection = () => selectedUser != null ? navigation.navigate('Nav', {user: selectedUser}) : alert('you need to pick a user')
 
     return (

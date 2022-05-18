@@ -1,30 +1,57 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
+import {Database} from "../DB/database";
+
+const db = new Database("Magasin");
 
 function AddItem(props) {
     let [nom, setNom] = useState(null)
     let [prix, setPrix] = useState(null)
     let [image, setImage] = useState(null)
 
+    const addProduits = () => {
+        Alert.alert(
+            "Ajout d'un Produit",
+            "êtes vous certain de vouloir ajouter ce produit?",
+            [
+                {
+                    text: "Non",
+                    style: "cancel"
+                },
+                { text: "Oui", 
+                    onPress: () => {
+                        db.execute(`insert into Produits (nom, prix, image) values ('${nom}', '${prix}', '${image}')`)
+                        .then((res) => Alert.alert(res.toString()));
+                    setNom(null)
+                    setPrix(null)
+                    setImage(null)} 
+                }
+            ]
+        );
+    }
+
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
                 onChangeText={(nom) => setNom(nom)}
+                value={nom}
                 placeholder='entrer le nom du produit'
             />
             <TextInput
                 style={styles.input}
                 onChangeText={(prix) => setPrix(prix)}
+                value={prix}
                 placeholder='entrer le prix du produit'
                 keyboardType='numeric'
             />
             <TextInput
                 style={styles.input}
                 onChangeText={(image) => setImage(image)}
+                value={image}
                 placeholder='entrer un URL'
             />
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => addProduits()}>
                 <Text style={styles.text}>Ajouter Item</Text>
             </TouchableOpacity>
         </View>
@@ -35,7 +62,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#2D2D2D',
         alignItems: 'center',
-        flex: 1,
+        height: 300,
         padding: 20,
         width: '90%',
         borderRadius: 15,
