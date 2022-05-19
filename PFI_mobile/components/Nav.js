@@ -9,6 +9,7 @@ import Magasin from './Magasin';
 import About from './About';
 import FindUs from './FindUs';
 import Panier from './Panier';
+import CoordonneMagasin from './CoordonneMagasin';
 
 
 const Tab = createBottomTabNavigator();
@@ -53,7 +54,7 @@ export default function Nav({navigation, route}) {
             />
             <Tab.Screen 
                 name="Find us" 
-                component={FindUs} 
+                component={CoordonneMagasin} 
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="map-marker-star" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
                     headerShown: false,

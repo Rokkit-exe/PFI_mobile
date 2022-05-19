@@ -1,0 +1,9 @@
+ [
+    {"id": 10, "coord": {"latitude": 45.60582096403444, "longitude": -73.71005015730853}, "nom": "Crypto Exchange Laval"},
+    {"id": 20, "coord": {"latitude": 45.5021204233527, "longitude": -73.56644430569405}, "nom": "Crypto Exchange Montreal"},
+    {"id": 30, "coord": {"latitude": 46.85754085300703, "longitude": -71.25698464523867}, "nom": "Crypto Exchange Québec"},
+    {"id": 40, "coord": {"latitude":  45.482077092942205, "longitude": -75.65178958645757}, "nom": "CryptoExchange Ottawa"},
+    {"id": 40, "coord": {"latitude":  45.64244003567396, "longitude": -73.84242376226508}, "nom": "Vous êtes ici!"}
+
+  ]
+  
