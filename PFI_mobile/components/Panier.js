@@ -68,7 +68,7 @@ function Panier({navigation, route}) {
         );
     }
     
-    const renderItem = ({item}) => <Item item={item} icon='trash-can' onPress={() => {removeItem(panier, item.id)}}/>
+    const renderItem = ({item}) => <Item item={item} showDetails={false} icon='trash-can' onPress={() => {removeItem(panier, item.id)}}/>
 
     return (
         <View style={styles.container} onLayout={() => getPanier()}>
@@ -100,6 +100,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#1D1B1B'
+    },
+    flatlist: {
+        width: '100%'
     },
     subContainer: {
         position: 'absolute',

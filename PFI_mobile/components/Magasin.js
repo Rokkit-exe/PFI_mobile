@@ -31,6 +31,10 @@ function Magasin({navigation, route}) {
             `insert into Panier (idUsager, idProduit, nom, prix, image) values (${user.id}, ${item.id}, '${item.nom}', '${item.prix}', '${item.image}')`
         );
     }
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => formatItem());    
+        return unsubscribe;
+    }, [navigation]);
     
     const renderItem = ({item}) => {
         return <Item item={item} icon='plus' onPress={() => addItemPanier(item)}/>
@@ -39,25 +43,39 @@ function Magasin({navigation, route}) {
     const loadItems = () => {
         db.execute("select id, nom, prix, image, detailsFR, detailsEn from Produits")
         .then((res) => {
-            setItems(res.rows)
+            setItems(res.rows.map((i) => i = {
+                detailsFR: i.detailsFR,
+                detailsEN: i.detailsEN,
+                id: i.id,
+                image: i.image,
+                nom: i.nom,
+                prix: i.prix,
+                prixFormat: new Intl.NumberFormat(lang, traduction('currency')).format(i.prix),
+                prefix: lang == 'fr-CA' ? "prix: " : "price: ",
+                details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN
+            }))
         })
     }
 
     const formatItem = () => {
         loadItems()
-        return items && items.map((i) => i = {
-            details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN,
+        setItems(items && items.map((i) => i = {
+            detailsFR: i.detailsFR,
+            detailsEN: i.detailsEN,
             id: i.id,
             image: i.image,
             nom: i.nom,
-            prix: lang == 'fr-CA' ? `prix: ${new Intl.NumberFormat(lang, traduction('currency')).format(i.prix)}` : `price: ${new Intl.NumberFormat(lang, traduction('currency')).format(i.prix)}`,
-        })
+            prix: i.prix,
+            prixFormat: new Intl.NumberFormat(lang, traduction('currency')).format(i.prix),
+            prefix: lang == 'fr-CA' ? "prix: " : "price: ",
+            details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN
+        }))
     }
     return (
         <View 
             style={styles.container} 
             onLayout={() => {
-                loadItems()
+                //formatItem()
             }}
         >
             <View style={styles.langContainer}>
@@ -70,7 +88,7 @@ function Magasin({navigation, route}) {
             </View>
             {user.admin == '1' ? <AddItem/> :
             <FlatList
-                data={formatItem()}
+                data={items}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 style={styles.flatlist}

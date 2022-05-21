@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 
-function Item({item, icon, onPress}) {
+function Item({item, icon, onPress, showDetails=true}) {
     let [details, setDetails] = useState(null)
 
     const toggle = () => details != null ? setDetails(null) : setDetails(newdetails)
@@ -12,7 +12,7 @@ function Item({item, icon, onPress}) {
             <View style={styles.itemContainer}>
                 <View>
                     <Text style={styles.name}>{item.nom}</Text>
-                    <Text style={styles.text}>{item.prix}</Text>
+                    <Text style={styles.text}>{item.prefix ? item.prefix : "prix: "}{item.prixFormat ? item.prixFormat : `${item.prix}$`}</Text>
                 </View>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{uri: item.image}}/>
@@ -24,9 +24,10 @@ function Item({item, icon, onPress}) {
                 </View>
             </View>
             <View>
+                {showDetails && 
                 <View style={styles.detailsContainer}>
                     <Text style={styles.text}>Details: {item.details}</Text>
-                </View>
+                </View>}
             </View>
         </TouchableOpacity>
     );
