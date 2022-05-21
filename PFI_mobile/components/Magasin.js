@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native';
 import Item from './Item';
 import {Database} from "../DB/database";
 import AddItem from './AddItem';
+import Intl from 'intl';
+import 'intl/locale-data/jsonp/fr-CA';
+import 'intl/locale-data/jsonp/en-CA';
 
 const db = new Database("Magasin");
 
-
+const trad = {
+    fr: {
+        currency: {style:"currency", currency: "CAD"},
+    },
+    en: {
+        currency: {style:"currency", currency: "USD"},
+    }
+}
 
 function Magasin({navigation, route}) {
     const {selectedUser} = route.params
     let [items, setItems] = useState(null)
     let [user, setUser] = useState(selectedUser)
+    let [lang, setLang] = useState('fr-CA')
+
+    const traduction = (messageKey) => lang == "fr-CA" ? trad.fr[messageKey] : trad.en[messageKey]
     
     const addItemPanier = (item) => {
         db.execute(
@@ -24,9 +37,20 @@ function Magasin({navigation, route}) {
     }
 
     const loadItems = () => {
-        db.execute("select id, nom, prix, image, details from Produits")
+        db.execute("select id, nom, prix, image, detailsFR, detailsEn from Produits")
         .then((res) => {
             setItems(res.rows)
+        })
+    }
+
+    const formatItem = () => {
+        loadItems()
+        return items && items.map((i) => i = {
+            details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN,
+            id: i.id,
+            image: i.image,
+            nom: i.nom,
+            prix: lang == 'fr-CA' ? `prix: ${new Intl.NumberFormat(lang, traduction('currency')).format(i.prix)}` : `price: ${new Intl.NumberFormat(lang, traduction('currency')).format(i.prix)}`,
         })
     }
     return (
@@ -36,9 +60,17 @@ function Magasin({navigation, route}) {
                 loadItems()
             }}
         >
+            <View style={styles.langContainer}>
+                <TouchableOpacity style={styles.button} onPress={() => {setLang('en-CA');}}>
+                    <Text style={styles.text}>En</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => {setLang('fr-CA');}}>
+                    <Text style={styles.text}>FR</Text>
+                </TouchableOpacity>
+            </View>
             {user.admin == '1' ? <AddItem/> :
             <FlatList
-                data={items}
+                data={formatItem()}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 style={styles.flatlist}
@@ -57,9 +89,24 @@ const styles = StyleSheet.create({
     flatlist: {
         flex: 1,
         width: '100%',
-        marginBottom: 20,
     },
-    
+    langContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    button: {
+        height: 30,
+        width: 50,
+        backgroundColor: '#7952B3',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    text: {
+        color: 'lightgrey',
+        fontSize: 18,
+        fontWeight: '600'
+    }
 })
 
 export default Magasin;

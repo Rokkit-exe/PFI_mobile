@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import Details from './Details';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 
 function Item({item, icon, onPress}) {
     let [details, setDetails] = useState(null)
-    const newdetails = () => <Details item={item}/>
+
     const toggle = () => details != null ? setDetails(null) : setDetails(newdetails)
     return (
         <TouchableOpacity style={styles.container} onPress={() => toggle()}>
             <View style={styles.itemContainer}>
                 <View>
                     <Text style={styles.name}>{item.nom}</Text>
-                    <Text style={styles.text}>Price: {item.prix}$</Text>
+                    <Text style={styles.text}>{item.prix}</Text>
                 </View>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{uri: item.image}}/>
@@ -25,7 +24,9 @@ function Item({item, icon, onPress}) {
                 </View>
             </View>
             <View>
-                {details}
+                <View style={styles.detailsContainer}>
+                    <Text style={styles.text}>Details: {item.details}</Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -70,7 +71,11 @@ const styles = StyleSheet.create({
         color: 'lightgrey',
         fontSize: 18,
         fontWeight: '400'
-    }
+    },
+    detailsContainer: {
+        marginLeft: '5%',
+        marginTop: 20
+    },
 })
 
 export default Item;
