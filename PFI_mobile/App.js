@@ -12,6 +12,7 @@ initData();
 
 const Stack = createNativeStackNavigator();
 export default function App() {
+  let [user, setUser] = useState()
   return (
     <NavigationContainer>
       <Stack.Navigator 
@@ -30,9 +31,6 @@ export default function App() {
         <Stack.Screen 
           name="Nav" 
           component={Nav} 
-          options={{
-            
-          }}
         />
       </Stack.Navigator>
     </NavigationContainer> 

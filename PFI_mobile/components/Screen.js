@@ -1,6 +1,5 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Platform, StatusBar } from 'react-native';
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 function Screen({children, style, onLayout}) {

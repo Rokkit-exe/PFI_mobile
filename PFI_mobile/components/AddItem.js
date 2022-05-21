@@ -7,7 +7,7 @@ const db = new Database("Magasin");
 function AddItem(props) {
     let [nom, setNom] = useState(null)
     let [prix, setPrix] = useState(null)
-    let [image, setImage] = useState(null)
+    let [image, setImage] = useState('https://h5p.org/sites/default/files/h5p/content/1209180/images/file-6113d5f8845dc.jpeg')
 
     const addProduits = () => {
         Alert.alert(
@@ -21,7 +21,7 @@ function AddItem(props) {
                 { text: "Oui", 
                     onPress: () => {
                         db.execute(`insert into Produits (nom, prix, image) values ('${nom}', '${prix}', '${image}')`)
-                        .then((res) => Alert.alert(res.toString()));
+                        .then((res) => Alert.alert('Ajouter avec succès'));
                     setNom(null)
                     setPrix(null)
                     setImage(null)} 

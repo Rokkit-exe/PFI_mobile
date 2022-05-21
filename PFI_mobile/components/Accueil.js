@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Image, Button, Pressable, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 
 import Screen from './Screen';
 import Connection from './Connection';

@@ -4,11 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   useWindowDimensions,
 } from "react-native";
-import MapView, { Marker, Polyline } from "react-native-maps";
-import commerces from "../commerces.json";
+import MapView, { Marker, Polyline, Callout } from "react-native-maps";
+import locations from "../commerces.json";
+
 
 const points = [
   { latitude: 45.64083762459042, longitude: -73.8429379391031 },
@@ -26,27 +26,31 @@ const RegionMontreal = {
 };
 
 
-function CoordonneMagasin(props) {
+function Locations(props) {
   const { height, width } = useWindowDimensions();
-  const [currentCommerce, setCurrentCommerce] = useState(0);
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
+      <View style={styles.textContainer}>
         <Text style={styles.titre}>Les Bureaux d'échange de Crypto</Text>
-
+      </View>
         <MapView
           style={{ height: height * 0.8, width: width }}
           provider="google"
           initialRegion={RegionMontreal}
         >
-          {commerces.map((b) => (
+          {locations.map((b) => (
             <Marker
               key={b.id}
-              title={b.nom}
+              pinColor={b.id == 50 ? 'green': 'red'}
               coordinate={b.coord}
               onPress={() => setCurrentCommerce(b.id)}
-            />
+            >
+              <Callout>
+                <Text style={{color: 'black'}}>{b.nom}</Text>
+                <Text style={{color: 'lightgrey'}}>{b.sousTitre}</Text>
+              </Callout>
+            </Marker>
           ))}
           <Polyline
             coordinates={points}
@@ -54,19 +58,22 @@ function CoordonneMagasin(props) {
             strokeWidth={8}
           />
         </MapView>
-      </SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#1D1B1B",
     alignItems: "center",
     justifyContent: "center",
   },
+  textContainer: {
+    marginTop: 17,
+    height: 40,
+  },
   titre: {
+    color: 'lightgrey',
     fontSize: 25,
     alignItems: "center",
     padding: 8,
@@ -82,4 +89,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CoordonneMagasin;
+export default Locations;

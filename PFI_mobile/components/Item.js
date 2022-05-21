@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Pressable, Text, Image, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import Details from './Details';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
@@ -10,18 +9,20 @@ function Item({item, icon, onPress}) {
     const newdetails = () => <Details item={item}/>
     const toggle = () => details != null ? setDetails(null) : setDetails(newdetails)
     return (
-        <TouchableOpacity style={styles.itemContainer} onPress={() => toggle()}>
-            <View>
-                <Text style={styles.name}>{item.nom}</Text>
-                <Text style={styles.text}>Price: {item.prix}$</Text>
-            </View>
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: item.image}}/>
-            </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={onPress}>
-                    <MaterialCommunityIcons name={icon} style={styles.icons} color="lightblue"/>
-                </TouchableOpacity>
+        <TouchableOpacity style={styles.container} onPress={() => toggle()}>
+            <View style={styles.itemContainer}>
+                <View>
+                    <Text style={styles.name}>{item.nom}</Text>
+                    <Text style={styles.text}>Price: {item.prix}$</Text>
+                </View>
+                <View style={styles.imageContainer}>
+                    <Image style={styles.image} source={{uri: item.image}}/>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} onPress={onPress}>
+                        <MaterialCommunityIcons name={icon} style={styles.icons} color="lightblue"/>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View>
                 {details}
@@ -31,20 +32,22 @@ function Item({item, icon, onPress}) {
 }
 
 const styles = StyleSheet.create({
-    itemContainer: {
+    container: {
         backgroundColor: '#2D2D2D',
         flex: 1,
         padding: 20,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        alignItems: 'center',
         width: '90%',
         borderRadius: 15,
         borderWidth: 2,
         borderColor: '#7952B3',
         marginTop: 10,
         marginLeft: '5%'
+    },
+    itemContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        alignItems: 'center',
     },
     imageContainer: {
         justifyContent: 'center',

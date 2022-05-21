@@ -1,21 +1,19 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { View, StyleSheet, Button, Text } from 'react-native';
+import { StyleSheet, } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons'; 
 
-import Screen from './Screen';
 import Magasin from './Magasin';
 import About from './About';
-import FindUs from './FindUs';
 import Panier from './Panier';
-import CoordonneMagasin from './CoordonneMagasin';
+import Locations from './Locations';
 
 
 const Tab = createBottomTabNavigator();
 
 export default function Nav({navigation, route}) {
     const {user} = route.params
+
     return (
         <Tab.Navigator 
             initialRouteName="Home"
@@ -38,7 +36,7 @@ export default function Nav({navigation, route}) {
             <Tab.Screen
                 initialParams={{selectedUser: user}}
                 name="Panier" 
-                component={Panier} 
+                component={Panier}
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="cart" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
                     headerShown: false,
@@ -53,8 +51,8 @@ export default function Nav({navigation, route}) {
                 }}
             />
             <Tab.Screen 
-                name="Find us" 
-                component={CoordonneMagasin} 
+                name="Locations" 
+                component={Locations} 
                 options={{ 
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="map-marker-star" color={focused ? "#7952B3" : "lightgrey"} style={styles.icons}/>,
                     headerShown: false,

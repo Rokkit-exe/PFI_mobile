@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, FlatList, Pressable, Image, Alert, TouchableOpacity } from 'react-native';
-import Screen from './Screen';
+import { View, StyleSheet, Text, FlatList, Image, Alert, TouchableOpacity } from 'react-native';
 import Item from './Item';
 import { Database } from '../DB/database';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 const db = new Database("Magasin");
 
-// Remplacer cette liste par les valeurs de la BD
-
 
 function Panier({navigation, route}) {
+    
     const getTotal = (items) => {
         let total = 0
         items && items.forEach((x) => total += x.prix)
@@ -19,19 +16,23 @@ function Panier({navigation, route}) {
     }
     
     const {selectedUser} = route.params
-    let [totals, setTotal] = useState(0);
+
+    let [total, setTotal] = useState(0);
     let [user, setUser] = useState(selectedUser)
     let [panier, setPanier] = useState(null)
 
-    const getConnectedUser = () => {
-        db.execute("select id from Connexion where connected = '1'")
+    const getPanier = () => {
+        db.execute(`select * from Panier where idUsager = ${user.id}`)
         .then((res) => {
-            console.log(res.rows[0].id)
-            let user = res.rows[0]
-            setUser(user)
-            setUserId(user.id)
+            setPanier(res.rows)
+            setTotal(getTotal(res.rows))
         })
     }
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => getPanier());    
+        return unsubscribe;
+    }, [navigation]);
 
     const removeItemPanier = (id) => {
         db.execute(`delete from Panier where idProduit = ${id} and idUsager = ${user.id}`)
@@ -53,14 +54,6 @@ function Panier({navigation, route}) {
         })
     }
 
-    const getPanier = () => {
-        db.execute(`select * from Panier where idUsager = ${user.id}`)
-        .then((res) => {
-            setPanier(res.rows)
-            setTotal(getTotal(res.rows))
-        })
-    }
-
     const buy = () => {
         Alert.alert(
             "Compléter vos achat",
@@ -78,10 +71,7 @@ function Panier({navigation, route}) {
     const renderItem = ({item}) => <Item item={item} icon='trash-can' onPress={() => {removeItem(panier, item.id)}}/>
 
     return (
-        <View style={styles.container} onLayout={() => {
-            //getConnectedUser()
-            getPanier()            
-        }}>
+        <View style={styles.container} onLayout={() => getPanier()}>
             <FlatList
                 data={panier}
                 renderItem={renderItem}
@@ -92,7 +82,7 @@ function Panier({navigation, route}) {
                 <View style={styles.subsubContainer}>
                     <View style={styles.textContainer}>
                         <Text style={styles.total}>
-                            Total: {totals}$
+                            Total: {total}$
                         </Text>
                     </View>
                     <TouchableOpacity style={styles.buy} onPress={() => buy()}>

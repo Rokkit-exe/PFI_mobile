@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, FlatList, Image, Button, Pressable, Alert } from 'react-native';
-import Screen from './Screen';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Details from './Details';
+import { View, StyleSheet, FlatList } from 'react-native';
 import Item from './Item';
 import {Database} from "../DB/database";
 import AddItem from './AddItem';
@@ -17,15 +12,6 @@ function Magasin({navigation, route}) {
     const {selectedUser} = route.params
     let [items, setItems] = useState(null)
     let [user, setUser] = useState(selectedUser)
-
-    const getConnectedUser = () => {
-        db.execute("select usager, motdepasse, admin, connected from Connexion where connected = '1'")
-        .then((res) => {
-            console.log(res.rows[0])
-            setUser(res.rows[0])
-            
-        })
-    }
     
     const addItemPanier = (item) => {
         db.execute(
@@ -38,7 +24,7 @@ function Magasin({navigation, route}) {
     }
 
     const loadItems = () => {
-        db.execute("select id, nom, prix, image from Produits")
+        db.execute("select id, nom, prix, image, details from Produits")
         .then((res) => {
             setItems(res.rows)
         })
@@ -48,7 +34,6 @@ function Magasin({navigation, route}) {
             style={styles.container} 
             onLayout={() => {
                 loadItems()
-                //getConnectedUser()
             }}
         >
             {user.admin == '1' ? <AddItem/> :

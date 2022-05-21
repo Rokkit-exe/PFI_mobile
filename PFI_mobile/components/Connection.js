@@ -1,5 +1,4 @@
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState, useNa } from 'react';
 import { View, StyleSheet, Text, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import AppPicker from './AppPicker';
@@ -10,23 +9,24 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 function Connection({style}) {
     let [users, setUsers] = useState(null)
-    let [selectedUser, setSelectedUser] = useState(null)
+    let [user, setUser] = useState(null)
     const navigation = useNavigation()
+
 
     const db = new Database('Magasin');
 
     const connectUser = () => {
-        selectedUser != null && db.execute(`update Connexion set connected = '1' where usager = '${selectedUser.usager}'`)
+        user != null && db.execute(`update Connexion set connected = '1' where usager = '${user.usager}'`)
     }
     const loadUsers = () => db.execute("select id, usager, motdepasse, admin from Connexion").then((res) => setUsers(res.rows))
-    const connection = () => selectedUser != null ? navigation.navigate('Nav', {user: selectedUser}) : alert('you need to pick a user')
+    const connection = () => user != null ? navigation.navigate('Nav', {user: user}) : alert('you need to pick a user')
 
     return (
         <View style={[styles.container, style]} onLayout={() => loadUsers()}>
             <AppPicker 
                 items={users} 
-                onSelectItem={(selectedUser) => setSelectedUser(selectedUser)} 
-                placeholder={selectedUser ? selectedUser.usager : 'pick a user'}
+                onSelectItem={(user) => setUser(user)} 
+                placeholder={user ? user.usager : 'pick a user'}
             />
             <TouchableOpacity 
                 style={styles.button} 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Modal, Button, FlatList, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Modal, FlatList, Text, TouchableOpacity } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Screen from './Screen';
 import PickerItem from './PickerItem';
@@ -39,7 +39,7 @@ function AppPicker({
                 </View>
             </TouchableOpacity>
             <Modal visible={modalVisible} animationType='slide' >
-                <View style={styles.modal}>
+                <Screen style={styles.modal}>
                     <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
                         <Text style={styles.buttonText}>Close</Text>
                     </TouchableOpacity>
@@ -60,7 +60,7 @@ function AppPicker({
                             />
                         }
                     />
-                </View>
+                </Screen>
             </Modal>
         </>
     );
