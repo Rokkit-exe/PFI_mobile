@@ -3,16 +3,16 @@ import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 
-function Item({item, icon, onPress, showDetails=true}) {
+function Item({item, icon, onPress}) {
     let [details, setDetails] = useState(null)
+    let [showDetails, SetShowDetails] = useState(false)
 
-    const toggle = () => details != null ? setDetails(null) : setDetails(newdetails)
     return (
-        <TouchableOpacity style={styles.container} onPress={() => toggle()}>
+        <TouchableOpacity style={styles.container} onPress={() => SetShowDetails(!showDetails)}>
             <View style={styles.itemContainer}>
                 <View>
                     <Text style={styles.name}>{item.nom}</Text>
-                    <Text style={styles.text}>{item.prefix ? item.prefix : "prix: "}{item.prixFormat ? item.prixFormat : `${item.prix}$`}</Text>
+                    <Text style={styles.text}>{item.prefixPrix}{item.prixFormat ? item.prixFormat : `${item.prix}$`}</Text>
                 </View>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{uri: item.image}}/>
@@ -26,7 +26,7 @@ function Item({item, icon, onPress, showDetails=true}) {
             <View>
                 {showDetails && 
                 <View style={styles.detailsContainer}>
-                    <Text style={styles.text}>Details: {item.details}</Text>
+                    <Text style={styles.text}>{item.prefixDetails}{item.details}</Text>
                 </View>}
             </View>
         </TouchableOpacity>

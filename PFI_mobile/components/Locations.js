@@ -25,6 +25,8 @@ const RegionMontreal = {
     "longitudeDelta": 0.24999964982271194,
 };
 
+let image = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHYkBg41ouqYoFoLCc92hcfifM3liKvxyr1A&usqp=CAU'
+
 
 function Locations(props) {
   const { height, width } = useWindowDimensions();
@@ -42,9 +44,9 @@ function Locations(props) {
           {locations.map((b) => (
             <Marker
               key={b.id}
+              //image={{uri: image}}
               pinColor={b.id == 50 ? 'green': 'red'}
               coordinate={b.coord}
-              onPress={() => setCurrentCommerce(b.id)}
             >
               <Callout>
                 <Text style={{color: 'black'}}>{b.nom}</Text>

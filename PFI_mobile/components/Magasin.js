@@ -51,8 +51,9 @@ function Magasin({navigation, route}) {
                 nom: i.nom,
                 prix: i.prix,
                 prixFormat: new Intl.NumberFormat(lang, traduction('currency')).format(i.prix),
-                prefix: lang == 'fr-CA' ? "prix: " : "price: ",
-                details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN
+                prefixPrix: lang == 'fr-CA' ? "prix: " : "price: ",
+                details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN,
+                prefixDetails: lang == 'fr-CA' ? "Detaille: " : "Details: "
             }))
         })
     }
@@ -67,22 +68,20 @@ function Magasin({navigation, route}) {
             nom: i.nom,
             prix: i.prix,
             prixFormat: new Intl.NumberFormat(lang, traduction('currency')).format(i.prix),
-            prefix: lang == 'fr-CA' ? "prix: " : "price: ",
-            details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN
+            prefixPrix: lang == 'fr-CA' ? "prix: " : "price: ",
+            details: lang == 'fr-CA' ? i.detailsFR : i.detailsEN,
+            prefixDetails: lang == 'fr-CA' ? "Detaille: " : "Details: "
         }))
     }
     return (
         <View 
             style={styles.container} 
-            onLayout={() => {
-                //formatItem()
-            }}
         >
             <View style={styles.langContainer}>
-                <TouchableOpacity style={styles.button} onPress={() => {setLang('en-CA');}}>
+                <TouchableOpacity style={styles.button} onPress={() => {setLang('en-CA'); formatItem()}}>
                     <Text style={styles.text}>En</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {setLang('fr-CA');}}>
+                <TouchableOpacity style={styles.button} onPress={() => {setLang('fr-CA'); formatItem()}}>
                     <Text style={styles.text}>FR</Text>
                 </TouchableOpacity>
             </View>
